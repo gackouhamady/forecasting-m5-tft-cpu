@@ -1,85 +1,91 @@
-# Prévision multi-horizon de la demande produit (CPU-Only, 100 % Open-Source)
+# Multi-Horizon Product Demand Forecasting (CPU-Only, 100% Open-Source)
 
-## Contexte et objectifs
-Un grand distributeur souhaite optimiser ses stocks et sa logistique en prévoyant la demande de ses produits sur plusieurs semaines.  
-Ce projet end-to-end consiste à :
-1. Collecter et préparer le jeu de données M5 (Kaggle).  
-2. Mettre en place des baselines CPU-only (ARIMA, Prophet, LightGBM).  
-3. Implémenter et entraîner un modèle avancé de type Transformer (Temporal Fusion Transformer adapté CPU).  
-4. Évaluer la performance multi-horizon (SMAPE, MASE, quantile loss).  
-5. Interpréter les prédictions (analyses d’attention, importances de features).  
-6. Packager en local (Docker + FastAPI) sans aucune dépense GPU ou service payant.
+## Context and Objectives
 
-## Arborescence du projet
+A major retailer wants to optimize inventory and logistics by forecasting product demand over multiple weeks.
+This end-to-end project consists of:
+
+1. Collecting and preparing the M5 dataset (Kaggle).
+2. Establishing CPU-only baselines (ARIMA, Prophet, LightGBM).
+3. Implementing and training an advanced Transformer model (Temporal Fusion Transformer adapted for CPU).
+4. Evaluating multi-horizon performance (SMAPE, MASE, quantile loss).
+5. Interpreting predictions (attention analyses, feature importances).
+6. Packaging locally (Docker + FastAPI) without any GPU usage or paid services.
+
+## Project Structure
+
 ```text
 forecasting-m5-tft-cpu/
-├── api/                  # code FastAPI pour servir le modèle
+├── api/                  # FastAPI code to serve the model
 │   └── main.py
 ├── data/
-│   ├── raw/              # données brutes téléchargées
-│   └── processed/        # données nettoyées et features
-├── docs/                 # documentation, diagrammes, slides
-├── notebooks/            # notebooks Jupyter par étape
+│   ├── raw/              # downloaded raw data
+│   └── processed/        # cleaned data and feature files
+├── docs/                 # documentation, diagrams, slides
+├── notebooks/            # Jupyter notebooks by step
 │   ├── 1-init.ipynb
 │   ├── 2-eda.ipynb
 │   └── …
 ├── src/
-│   ├── models/           # définition des classes de modèles
-│   └── utils/            # fonctions utilitaires (pré-traitement, métriques)
-├── tests/                # tests unitaires
+│   ├── models/           # model class definitions
+│   └── utils/            # utility functions (preprocessing, metrics)
+├── tests/                # unit tests
 ├── .gitignore
-├── Dockerfile            # pour créer l’image Docker CPU-only
-├── environment.yml       # environnement conda (optionnel)
-├── requirements.txt      # dépendances pip
-└── README.md             # ce fichier
+├── Dockerfile            # to build CPU-only Docker image
+├── environment.yml       # conda environment (optional)
+├── requirements.txt      # pip dependencies
+└── README.md             # this file
 ```
 
 ## Installation
-- Option pip
-``` bash 
-python3 -m venv venv
-.\venv\Scripts\Activate.ps1   # PowerShell
-pip install --upgrade pip
-pip install -r requirements.txt
-``` 
-- Option conda
-``` bash 
-conda env create -f environment.yml
-conda activate forecasting-m5
-``` 
 
+* **Pip option**
+
+  ```bash
+  python3 -m venv venv
+  .\venv\Scripts\Activate.ps1   # PowerShell on Windows
+  pip install --upgrade pip
+  pip install -r requirements.txt
+  ```
+
+* **Conda option**
+
+  ```bash
+  conda env create -f environment.yml
+  conda activate forecasting-m5
+  ```
 
 ## Usage
-### Notebooks : 
-Ouvrir notebook et suivre l’ordre chronologique jusqu’au packaging
 
-### Données
+### Notebooks
 
-Placer les CSV M5 dans data/raw/.
+Open each notebook in sequence to follow the process through to packaging.
 
-Lancer le script de pré-traitement (src/utils/preprocess.py) pour générer data/processed/.
+### Data
 
-## API FastAPI
+Place the M5 CSV files in `data/raw/`. Then run the preprocessing script (`src/utils/preprocess.py`) to generate `data/processed/`.
 
-```  bash
+## FastAPI API
+
+```bash
 docker build -t forecasting-cpu .
 docker run -p 8000:8000 forecasting-cpu
-puis accéder à http://localhost:8000/docs.
-``` 
+# Then open http://localhost:8000/docs in your browser.
+```
 
+## One-Week Plan
 
-``` text
-Planning (1 semaine)
-Jour	Tâches
-1	Installation, exploration initiale du dataset M5
-2	Nettoyage, feature engineering, EDA
-3	Baselines CPU (ARIMA, Prophet, LightGBM)
-4	Implémentation du Temporal Fusion Transformer CPU
-5	Entraînement et tuning hyperparamètres
-6	Évaluation multi-horizon et analyses d’attention
-7	Packaging Docker, API FastAPI, rédaction des slides
+```text
+Day	Tasks
+1	Installation, initial exploration of the M5 dataset
+2	Cleaning, feature engineering, EDA
+3	CPU baselines (ARIMA, Prophet, LightGBM)
+4	Implement Temporal Fusion Transformer for CPU
+5	Training and hyperparameter tuning
+6	Multi-horizon evaluation and attention analyses
+7	Docker packaging, FastAPI deployment, slide creation
+```
 
-``` 
+## License
 
-## Licence
-Ce projet est publié sous licence MIT 
+This project is released under the MIT License.
